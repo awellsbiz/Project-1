@@ -35,7 +35,6 @@ Canvas, DOM
 
 ## ROAD BLOCKS
 
-- not knowing where to start
 - animating the screen to move
 
 
