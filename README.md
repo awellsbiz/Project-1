@@ -36,3 +36,12 @@ This game will be made using HTML/CSS/JS using Document Object Model
 - Create a park enviroment with clouds
 - add arcade music that is  easy on the ears
 
+## ROAD BLOCKS
+
+- not knowing where to start
+- animating the screen to move
+- making the player icon
+- making the star
+- maybe more...
+
+
