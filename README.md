@@ -20,8 +20,8 @@ Canvas, DOM
 - Game board must be at center of the screen
 - game board must have loading/ start screen and End screen
 - Must have a timmer in the right hand corner 
-- player icon must be styled a block
-- obsticle are styled blocks of different color 
+- player icon must be styled as a block
+- obsticle are styled blocks of different color than player
 - player must move and be able to jump over obstacles
 - the game board must appear as its moving forward with new obsticles
 - Must have instructions below the game box 
