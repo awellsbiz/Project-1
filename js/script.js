@@ -100,6 +100,7 @@ let obBlock = new obstacle (170, 209, 20, 40, "green", 2)
 let obBlock2 = new obstacle (450, 230, 20, 20, "green", 2)
 let obBlock3 = new obstacle (550, 230, 20, 20, "green", 2)
 let obBlock4 = new obstacle (650, 230, 20, 20, "green", 2)
+let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
 
 console.log(obBlock)
 
@@ -110,6 +111,20 @@ function backgroundLine() {
     ctx.lineWidth = 2;
     ctx.strokeStyle = "black";
     ctx.stroke();
+}
+//building out a random number function to use when needed to help generate new obstacles.
+
+function getRandomNumber(min,max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+presentTime = 1000; 
+
+function generateBlocks() {
+    let timeDelay = getRandomNumber(1000, 2000);
+    obBlock5.push(new obstacle(750, 230, 20, 20, "green", 2))
+
+    setTimeout(generateBlocks, timeDelay)
 }
 
 function animate() {
@@ -125,7 +140,11 @@ function animate() {
     obBlock3.render()
     obBlock4.slide()
     obBlock4.render()
-    console.log(obBlock.slide)
+    //console.log(obBlock.slide)
+    obBlock5.forEach(obBlocks => {
+        obBlocks.slide();
+        obBlocks.render();
+    })
 }
 
 
@@ -140,6 +159,9 @@ addEventListener('keydown',  e => {
 })
 
 animate()
+setTimeout(() => {
+    generateBlocks();
+}, getRandomNumber(presentTime))
 
 // let newObstacles =[]
 
