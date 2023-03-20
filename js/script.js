@@ -1,4 +1,3 @@
-//psudo code for canvas element
 //grab all the elements that you will be using for the game and set some variables for them.
 
 const canvas = document.querySelector("#canvas")
@@ -47,22 +46,82 @@ class player {
         this.height = height;
         this.width = width;
         this.color = color;
+        //creating these jumping variables for the jumping action. I will put this into a function
+        this.jumpHeight = 12;//will begin y speed
+        this.shouldJump = false;//boolean to compare wether the player should jump or not- will revers later in the code
+        this.jumpCounter = 0;//will go up on each frame
+        
     }
+    
+//32 frmaes is good for jumping- makes the animation smooth- 14 frames for up 4 frames stationed in the air and 14 for coming down
+    jump() {
+        if(this.shouldJump){
+            this.jumpCounter++;
+            if(this.jumpCounter < 15)
+            this.y -= this.jumpHeight;
+        }else if(this.jumpCounter > 14 && this.jumpCounter < 19){
+            this.y += 0;
+        }else if(this.jumpCounter < 33){
+            this.y += this.jumpHeight;
+        }
+        if(this.jumpCounter >= 32){
+            this.shouldJump = false;
+        }
+        }
     
     render() {// function to draw and fill out on canvas...its "renders" it. may use draw() too
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
-//to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
 
 let jumper = new player(20, 224, 25, 25, 'green');
-// console.log(jumper)
+
 function animate() {
     requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
-    
     backgroundLine();//got to call so that it will show-- this is a call back function!
     jumper.render()
 }
 animate()
+//to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
+
+//need to call the render function before the player/'jumper' has drawn to the canvas- makes the jump visibly seen by the user
+
+// console.log(jumper)
+
+//moved function down here and added jumper/'player' render funtion inside that scope. I was calling the animate but the render was happening  out of scope. and not showing square. 
+
+
+
+
+// jump() {
+// if(this.shouldJump){
+//     this.jumpCounter++;
+//     if(this.jumpCounter < 15)
+//     this.y -= this.jumpHeight;
+// }else if(this.jumpCounter > 14 && this.jumpCounter < 19){
+//     this.y += 0;
+// }else if(this.jumpCounter < 33){
+//     this.y =+ this.jumpHeight;
+// }
+// if(this.jumpCounter >= 32){
+//     this.shouldJump = false;
+// }
+// };
+//everything in the class is is in the animation scope. callbacks are running through that function.
+// render() {
+//     this.jump()
+//     ctx.fillStyle = this.color
+//     ctx.fillRect(this.x, this.y, this.height, this.width)
+// }
+
+// accsessing event listener from the window- will trigger call back
+canvas.addEventListener('click', e => {
+    if(e === "click"){
+        if(!jumper.shouldJump){
+            jumper.shouldJump = 0;
+            jumper.shouldJump = true;
+        }
+    }
+})
