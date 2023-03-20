@@ -3,6 +3,7 @@
 const canvas = document.querySelector("#canvas")
 let timer = document.querySelector("#timer")
 
+
 //set up the canvas. the .getContex allows the use of all the tools of canvas. like creating shapes and such
 
 const ctx = canvas.getContext("2d")
@@ -45,6 +46,7 @@ class player {
         this.jumpHeight = 12;//will begin y speed
         this.shouldJump = false;//boolean to compare wether the player should jump or not- will revers later in the code
         this.jumpCounter = 0;//will go up on each frame- allowing to stop animation
+        this.jumpUp = true;
         
     }
     
@@ -68,6 +70,7 @@ jump() {
     if(this.jumpCounter >= 32){
         this.shouldJump = false;
     }
+    console.log(this.shouldJump, this.jumpCounter, this.jumpHeight)
     }
 
 }
@@ -91,16 +94,17 @@ function animate() {
     backgroundLine();//got to call so that it will show-- this is a call back function!
     jumper.render()
 }
-animate()
-
 addEventListener('keydown',  e => {
     if (e.code === "Space"){
         if(!jumper.shouldJump){
-            jumper.shouldJump = 0;
+            jumper.jumpCounter = 0;
             jumper.shouldJump = true;
         }
+        console.log(e)
     }
 })
+
+animate()
 
 //to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
 
