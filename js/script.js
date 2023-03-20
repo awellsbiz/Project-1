@@ -20,24 +20,47 @@ canvas.setAttribute('width', getComputedStyle(canvas).width)
 // ctx.fillStyle = "green"
 // ctx.fillRect(30, 30, 50, 50)
 
-const player = {
-    height: 30,
-    width: 30,
-    jumping: true,
-    x: 0,
-    y: 0,
-    xVelocity: 0,
-    yVelocity: 0
+//using a funtion to draw the line. the code will be separate from other code. 
 
+function backgroundLine() {
+    ctx.beginPath();
+    ctx.moveTo(0, 250);//x=0 y=200line will start on the left
+    ctx.lineTo(573, 250);//horizontal line 
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
 }
 
-function controller(e) {
-    const speed= 10
-    switch(e.key) {
-        case "ArrowRight":
-            player.x += speed
-            break
-        case "SpaceBar":
-            player.y += speed * 2
+// need to animante the line to be repeatedly drawn. make a function out of it. Maybe loop it through. it creates an illusion- the drawings are being crated quickly
+
+function animate() {
+    requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
+    ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
+    
+    backgroundLine();//got to call so that it will show-- this is a call back function!
+}
+
+animate();
+
+// create player- see canvas crawler code
+// has its own class allowing the use of methods and fields with only the class and not the app
+//pasing arguments in the constructor allows for customization. 
+
+class player {
+    constructor(x, y, height, width, color){
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+    }
+
+render() {// function to draw and fill out on canvas...its "renders" it. may use draw() too
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+//to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
+
+let jumper = new player(10, 10, 50, 50, 'green');
+// console.log(jumper)
