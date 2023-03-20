@@ -33,14 +33,8 @@ function backgroundLine() {
 
 // need to animante the line to be repeatedly drawn. make a function out of it. Maybe loop it through. it creates an illusion- the drawings are being crated quickly
 
-function animate() {
-    requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
-    ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
-    
-    backgroundLine();//got to call so that it will show-- this is a call back function!
-}
 
-animate();
+
 
 // create player- see canvas crawler code
 // has its own class allowing the use of methods and fields with only the class and not the app
@@ -54,13 +48,21 @@ class player {
         this.width = width;
         this.color = color;
     }
-
-render() {// function to draw and fill out on canvas...its "renders" it. may use draw() too
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    
+    render() {// function to draw and fill out on canvas...its "renders" it. may use draw() too
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 //to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
 
-let jumper = new player(10, 10, 50, 50, 'green');
+let jumper = new player(20, 224, 25, 25, 'green');
 // console.log(jumper)
+function animate() {
+    requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
+    ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
+    
+    backgroundLine();//got to call so that it will show-- this is a call back function!
+    jumper.render()
+}
+animate()
