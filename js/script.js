@@ -32,8 +32,6 @@ canvas.setAttribute('width', getComputedStyle(canvas).width)
 // has its own class allowing the use of methods and fields with only the class and not the app
 //pasing arguments in the constructor allows for customization. 
 
-// ********* PIVOTING *********
-
 
 class player {
     constructor(x, y, height, width, color){
@@ -77,6 +75,31 @@ jump() {
 }
 
 
+
+let jumper = new player(20, 224, 25, 25, 'red');
+
+
+class obstacle {
+    constructor(x, y, width, height, color, speed){
+        this.x = x
+        this.y = y
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.slideSpeed = speed;
+    }
+    render() {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+    slide() {
+        this.draw();
+        this.x -= this.slideSpeed
+    }
+}
+let obBlock = new obstacle (170, 209, 40, 40, "green", 5)
+console.log(obBlock)
+
 function backgroundLine() {
     ctx.beginPath();
     ctx.moveTo(0, 250);//x=0 y=200line will start on the left
@@ -86,13 +109,12 @@ function backgroundLine() {
     ctx.stroke();
 }
 
-let jumper = new player(20, 224, 25, 25, 'red');
-
 function animate() {
     requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
     backgroundLine();//got to call so that it will show-- this is a call back function!
     jumper.render()
+    obBlock.render()
 }
 addEventListener('keydown',  e => {
     if (e.code === "Space"){
@@ -105,6 +127,9 @@ addEventListener('keydown',  e => {
 })
 
 animate()
+
+// let newObstacles =[]
+
 
 //to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
 
