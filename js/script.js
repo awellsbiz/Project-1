@@ -21,14 +21,6 @@ canvas.setAttribute('width', getComputedStyle(canvas).width)
 
 //using a funtion to draw the line. the code will be separate from other code. 
 
-function backgroundLine() {
-    ctx.beginPath();
-    ctx.moveTo(0, 250);//x=0 y=200line will start on the left
-    ctx.lineTo(573, 250);//horizontal line 
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "black";
-    ctx.stroke();
-}
 
 // need to animante the line to be repeatedly drawn. make a function out of it. Maybe loop it through. it creates an illusion- the drawings are being crated quickly
 
@@ -38,6 +30,9 @@ function backgroundLine() {
 // create player- see canvas crawler code
 // has its own class allowing the use of methods and fields with only the class and not the app
 //pasing arguments in the constructor allows for customization. 
+
+// ********* PIVOTING *********
+
 
 class player {
     constructor(x, y, height, width, color){
@@ -49,33 +44,46 @@ class player {
         //creating these jumping variables for the jumping action. I will put this into a function
         this.jumpHeight = 12;//will begin y speed
         this.shouldJump = false;//boolean to compare wether the player should jump or not- will revers later in the code
-        this.jumpCounter = 0;//will go up on each frame
+        this.jumpCounter = 0;//will go up on each frame- allowing to stop animation
         
     }
     
 //32 frmaes is good for jumping- makes the animation smooth- 14 frames for up 4 frames stationed in the air and 14 for coming down
-    jump() {
-        if(this.shouldJump){
-            this.jumpCounter++;
-            if(this.jumpCounter < 15)
-            this.y -= this.jumpHeight;
-        }else if(this.jumpCounter > 14 && this.jumpCounter < 19){
-            this.y += 0;
-        }else if(this.jumpCounter < 33){
-            this.y += this.jumpHeight;
-        }
-        if(this.jumpCounter >= 32){
-            this.shouldJump = false;
-        }
-        }
-    
-    render() {// function to draw and fill out on canvas...its "renders" it. may use draw() too
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+
+render() {// function to draw and fill out on canvas...its "renders" it. may use draw() too
+    this.jump()
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+}
+jump() {
+    if(this.shouldJump){
+        this.jumpCounter++;
+        if(this.jumpCounter < 15) {
+        this.y -= this.jumpHeight;
+    }else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
+        this.y += 0;
+    }else if(this.jumpCounter < 33){
+        this.y += this.jumpHeight;
     }
+    if(this.jumpCounter >= 32){
+        this.shouldJump = false;
+    }
+    }
+
+}
 }
 
-let jumper = new player(20, 224, 25, 25, 'green');
+
+function backgroundLine() {
+    ctx.beginPath();
+    ctx.moveTo(0, 250);//x=0 y=200line will start on the left
+    ctx.lineTo(573, 250);//horizontal line 
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+}
+
+let jumper = new player(20, 224, 25, 25, 'red');
 
 function animate() {
     requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
@@ -84,6 +92,16 @@ function animate() {
     jumper.render()
 }
 animate()
+
+addEventListener('keydown',  e => {
+    if (e.code === "Space"){
+        if(!jumper.shouldJump){
+            jumper.shouldJump = 0;
+            jumper.shouldJump = true;
+        }
+    }
+})
+
 //to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
 
 //need to call the render function before the player/'jumper' has drawn to the canvas- makes the jump visibly seen by the user
@@ -117,11 +135,4 @@ animate()
 // }
 
 // accsessing event listener from the window- will trigger call back
-canvas.addEventListener('click', e => {
-    if(e === "click"){
-        if(!jumper.shouldJump){
-            jumper.shouldJump = 0;
-            jumper.shouldJump = true;
-        }
-    }
-})
+
