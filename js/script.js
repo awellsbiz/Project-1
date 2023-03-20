@@ -93,11 +93,14 @@ class obstacle {
         ctx.fillRect(this.x, this.y, this.width, this.height)
     }
     slide() {
-        this.draw();
         this.x -= this.slideSpeed
     }
 }
-let obBlock = new obstacle (170, 209, 40, 40, "green", 5)
+let obBlock = new obstacle (170, 209, 20, 40, "green", 2)
+let obBlock2 = new obstacle (450, 230, 20, 20, "green", 2)
+let obBlock3 = new obstacle (550, 230, 20, 20, "green", 2)
+let obBlock4 = new obstacle (650, 230, 20, 20, "green", 2)
+
 console.log(obBlock)
 
 function backgroundLine() {
@@ -114,8 +117,18 @@ function animate() {
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
     backgroundLine();//got to call so that it will show-- this is a call back function!
     jumper.render()
+    obBlock.slide()
     obBlock.render()
+    obBlock2.slide()
+    obBlock2.render()
+    obBlock3.slide()
+    obBlock3.render()
+    obBlock4.slide()
+    obBlock4.render()
+    console.log(obBlock.slide)
 }
+
+
 addEventListener('keydown',  e => {
     if (e.code === "Space"){
         if(!jumper.shouldJump){
