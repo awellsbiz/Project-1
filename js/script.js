@@ -1,7 +1,9 @@
 //grab all the elements that you will be using for the game and set some variables for them.
 
 const canvas = document.querySelector("#canvas")
-let timer = document.querySelector("#timer")
+let startScreen = document.querySelector("#startScreen")
+let startTime = 60
+
 
 
 //set up the canvas. the .getContex allows the use of all the tools of canvas. like creating shapes and such
@@ -34,17 +36,18 @@ canvas.setAttribute('width', getComputedStyle(canvas).width)
 
 
 class player {
-    constructor(x, y, height, width, color){
+    constructor(x, y, height, width, color, speed){
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.color = color;
         //creating these jumping variables for the jumping action. I will put this into a function
+        this.speed = speed
         this.jumpHeight = 12;//will begin y speed
         this.shouldJump = false;//boolean to compare wether the player should jump or not- will revers later in the code
         this.jumpCounter = 0;//will go up on each frame- allowing to stop animation
-        this.jumpUp = true;
+        this.moveRight = false
         
     }
     
@@ -72,11 +75,13 @@ jump() {
     }
 
 }
+
+moveRight
 }
 
 
 
-let jumper = new player(20, 224, 25, 25, 'red');
+let jumper = new player(20, 224, 25, 25, 'red', 10);
 
 
 class obstacle {
@@ -97,12 +102,25 @@ class obstacle {
     }
 }
 let obBlock = new obstacle (170, 230, 20, 20, "green", 1)
+
 // let obBlock2 = new obstacle (450, 230, 20, 20, "green", 2)
 // let obBlock3 = new obstacle (550, 230, 20, 20, "green", 2)
 // let obBlock4 = new obstacle (650, 230, 20, 20, "green", 2)
 //let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
 
+let countDown = setInterval(() => {
+    startTime--
+    //ctx.innerText = startTime
+}, 1000)
 
+function timerBox(){
+    ctx.fillStyle = "red";
+    ctx.font = "bold 18px Arial";
+    ctx.fillText(`Time Left: ${startTime}`, 400, 40);
+    if(startTime === 0){
+        clearInterval(countDown)
+    }
+}
 
 function backgroundLine() {
     ctx.beginPath();
@@ -127,14 +145,19 @@ function backgroundLine() {
 //     setTimeout(generateBlocks, timeDelay)
 //     console.log(obBlock5.push)
 // }
+
+
+
 let animationId = null;
 function animate() {
    animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
     backgroundLine();//got to call so that it will show-- this is a call back function!
+    timerBox()
+    console.log(timerBox)
     jumper.render()
-    obBlock.slide()
-    obBlock.render()
+    // obBlock.slide()
+    // obBlock.render()
     // obBlock2.slide()
     // obBlock2.render()
     // obBlock3.slide()
@@ -149,26 +172,33 @@ function animate() {
     //         console.log("colliding")
     //     }  
     // })
-    if (obBlock.x <= jumper.width + jumper.x) {
+    if (obBlock.x + obBlock.width <= jumper.width + jumper.x ) {
         cancelAnimationFrame(animationId)
     }
 }
 
     //create the game ending 
 
-
-addEventListener('keydown',  e => {
-    if (e.code === "Space"){
-        if(!jumper.shouldJump){ 
-            jumper.jumpCounter = 0;
-            jumper.shouldJump = true;
+    
+    animate()
+    document.addEventListener('keydown',  e => {
+        if (e.code === "Space"){
+            if(!jumper.shouldJump){ 
+                jumper.jumpCounter = 0;
+                jumper.shouldJump = true;
+            }
         }
-        console.log(e)
-    }
-})
-
-
-animate()
+        if(e.key === "ArrowRight"){
+            //if(!jumper.moveRight){
+                console.log("arrow right")
+                jumper.x += jumper.speed
+                jumper.moveRight= true
+                //jumper.moveRight === !
+            //}
+        }
+        //console.log(e)
+        }
+    )
 // setTimeout(() => {
 //     generateBlocks();
 // }, getRandomNumber(presentTime))

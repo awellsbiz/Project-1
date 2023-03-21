@@ -18,11 +18,21 @@ h1 {
     text-align: center;
 }
 
+#startScreen {
+    position: absolute;
+    width: 150px;
+    height: 80px;
+    border: 5px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .timer {
     
 }
 
-.container {
+#container {
     display: flex;
    background-color: pink;
    height: 700px;
