@@ -96,13 +96,13 @@ class obstacle {
         this.x -= this.slideSpeed
     }
 }
-let obBlock = new obstacle (170, 209, 20, 40, "green", 2)
-let obBlock2 = new obstacle (450, 230, 20, 20, "green", 2)
-let obBlock3 = new obstacle (550, 230, 20, 20, "green", 2)
-let obBlock4 = new obstacle (650, 230, 20, 20, "green", 2)
-let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
+let obBlock = new obstacle (170, 230, 20, 20, "green", 1)
+// let obBlock2 = new obstacle (450, 230, 20, 20, "green", 2)
+// let obBlock3 = new obstacle (550, 230, 20, 20, "green", 2)
+// let obBlock4 = new obstacle (650, 230, 20, 20, "green", 2)
+//let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
 
-console.log(obBlock)
+
 
 function backgroundLine() {
     ctx.beginPath();
@@ -114,43 +114,52 @@ function backgroundLine() {
 }
 //building out a random number function to use when needed to help generate new obstacles.
 
-function getRandomNumber(min,max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// function getRandomNumber(min,max){
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
 
-presentTime = 1000; 
+// presentTime = 1000; 
 
-function generateBlocks() {
-    let timeDelay = getRandomNumber(1000, 2000);
-    obBlock5.push(new obstacle(750, 230, 20, 20, "green", 2))
+// function generateBlocks() {
+//     let timeDelay = getRandomNumber(800, 1400);
+//     obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
 
-    setTimeout(generateBlocks, timeDelay)
-}
-
+//     setTimeout(generateBlocks, timeDelay)
+//     console.log(obBlock5.push)
+// }
+let animationId = null;
 function animate() {
-    requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
+   animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
     backgroundLine();//got to call so that it will show-- this is a call back function!
     jumper.render()
     obBlock.slide()
     obBlock.render()
-    obBlock2.slide()
-    obBlock2.render()
-    obBlock3.slide()
-    obBlock3.render()
-    obBlock4.slide()
-    obBlock4.render()
+    // obBlock2.slide()
+    // obBlock2.render()
+    // obBlock3.slide()
+    // obBlock3.render()
+    // obBlock4.slide()
+    // obBlock4.render()
     //console.log(obBlock.slide)
-    obBlock5.forEach(obBlocks => {
-        obBlocks.slide();
-        obBlocks.render();
-    })
+
+    // obBlock.forEach(obBlocks => {
+    //     obBlocks.slide();
+    //     if (jumper.x + jumper.width > obBlocks.x) {
+    //         console.log("colliding")
+    //     }  
+    // })
+    if (obBlock.x <= jumper.width + jumper.x) {
+        cancelAnimationFrame(animationId)
+    }
 }
+
+    //create the game ending 
 
 
 addEventListener('keydown',  e => {
     if (e.code === "Space"){
-        if(!jumper.shouldJump){
+        if(!jumper.shouldJump){ 
             jumper.jumpCounter = 0;
             jumper.shouldJump = true;
         }
@@ -158,10 +167,11 @@ addEventListener('keydown',  e => {
     }
 })
 
+
 animate()
-setTimeout(() => {
-    generateBlocks();
-}, getRandomNumber(presentTime))
+// setTimeout(() => {
+//     generateBlocks();
+// }, getRandomNumber(presentTime))
 
 // let newObstacles =[]
 
