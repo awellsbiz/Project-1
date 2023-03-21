@@ -132,19 +132,19 @@ function backgroundLine() {
 }
 //building out a random number function to use when needed to help generate new obstacles.
 
-// function getRandomNumber(min,max){
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
+function getRandomNumber(min,max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-// presentTime = 1000; 
+presentTime = 1000; 
 
-// function generateBlocks() {
-//     let timeDelay = getRandomNumber(800, 1400);
-//     obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
+function generateBlocks() {
+    let timeDelay = getRandomNumber(800, 1400);
+ obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
 
-//     setTimeout(generateBlocks, timeDelay)
-//     console.log(obBlock5.push)
-// }
+    setTimeout(generateBlocks, timeDelay)
+    console.log(obBlock5.push)
+}
 
 
 
@@ -156,8 +156,8 @@ function animate() {
     timerBox()
     console.log(timerBox)
     jumper.render()
-    // obBlock.slide()
-    // obBlock.render()
+    obBlock.slide()
+    obBlock.render()
     // obBlock2.slide()
     // obBlock2.render()
     // obBlock3.slide()
@@ -166,21 +166,20 @@ function animate() {
     // obBlock4.render()
     //console.log(obBlock.slide)
 
-    // obBlock.forEach(obBlocks => {
-    //     obBlocks.slide();
+    // obBlock5.forEach(obBlocks => {
+    //     obBlocks.slide()
+    //     obBlocks.render();
     //     if (jumper.x + jumper.width > obBlocks.x) {
     //         console.log("colliding")
     //     }  
-    // })
-    if (obBlock.x + obBlock.width <= jumper.width + jumper.x ) {
-        cancelAnimationFrame(animationId)
-    }
+    //  })
+    // if (obBlock.x + obBlock.width <= jumper.width + jumper.x ) {
+    //     cancelAnimationFrame(animationId)
+    // }
 }
 
     //create the game ending 
 
-    
-    animate()
     document.addEventListener('keydown',  e => {
         if (e.code === "Space"){
             if(!jumper.shouldJump){ 
@@ -191,7 +190,7 @@ function animate() {
         if(e.key === "ArrowRight"){
             //if(!jumper.moveRight){
                 console.log("arrow right")
-                jumper.x += jumper.speed
+                jumper.x += jumper.speed + 20
                 jumper.moveRight= true
                 //jumper.moveRight === !
             //}
@@ -199,6 +198,8 @@ function animate() {
         //console.log(e)
         }
     )
+    
+    animate()
 // setTimeout(() => {
 //     generateBlocks();
 // }, getRandomNumber(presentTime))
