@@ -1,5 +1,5 @@
 * {
-    background-color: olivedrab;
+    /* background-color: pink; */
     margin: 0 auto;
 }
 
@@ -10,27 +10,41 @@ body {
   
 }
 #title {
-   border: 5px hotpink solid;
+   border: 5px grey solid;
    padding: 5px;
+   margin: 15px auto;
+   background-color: black;
 
 }
 h1 {
     text-align: center;
+    color: red;
 }
 
-#startScreen {
-    position: absolute;
-    width: 150px;
+#overlay {
+    /* position: relative; */
+    top: 119px;
+    left: 0;
+    width: 170px;
     height: 80px;
-    border: 5px solid black;
+    background-color: aliceblue;
+    border: 5px solid grey;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.timer {
+    z-index: 1 ;
     
 }
+#button{
+ 
+}
+#startCard {
+    text-align: center;
+}
+#container, canvas, #overlay {
+    position: relative;
+}
+
 
 #container {
     display: flex;
@@ -46,15 +60,18 @@ canvas {
     height: 299px;
     width: 573px;
     display: flex;
+    margin: -87px auto;
 
     
 }
 
 .instructions {
-background-color: blue;
-height: 88px;
+background-color: rgb(83, 89, 90);
+height: 115px;
 width: 573px;
 border: 5px red solid;
 text-align: center;
 font-size: 18px;
+padding: 10px;
+margin: 97px auto;
 }

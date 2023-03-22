@@ -113,17 +113,25 @@ let countDown = setInterval(() => {
 }, 1000)
 
 function startGame (){
-    ctx.fontStyle = "blue"
-    ctx.font = "bold 18px Arial";
-    let message = ctx.fillText("PRESS ARROW KEY UP TO START", 100, 100)
+    // ctx.fontStyle = "blue"
+    // ctx.font = "bold 18px Arial";
+    // let message = ctx.fillText("PRESS ARROW KEY UP TO START", 100, 100)
     if (startTime === 60) {
         cancelAnimationFrame(animationId)
     } 
-    let spaceBar = document.addEventListener("keydown", e => {
-        if (e.code === "ArrowUp"){
-            animate()
-        }
-})
+    // button = document.addEventListener("click", e => {
+    //             animate() 
+             
+//})
+
+button.onclick = function () {
+    animate()
+    if (overlay.style.display !== "none") {
+        overlay.style.display = "none";
+    } else {
+        overlay.style.display = "block";
+    }
+}
 
 }
 
