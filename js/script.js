@@ -109,6 +109,25 @@ let countDown = setInterval(() => {
     startTime--
     //ctx.innerText = startTime
 }, 1000)
+let sp
+function startGame (){
+    // ctx.beginPath();
+    // ctx.rect(250,150, 50, 100)
+    ctx.fontStyle = "green"
+    ctx.font = "bold 18px Arial";
+    ctx.fillText("PRESS SPACE TO START", 100, 100)
+    if (startTime === 60) {
+        cancelAnimationFrame(animationId)
+    } 
+
+let spaceBar = document.addEventListener("keydown", e => {
+    if (e.code === "Space"){
+        animate()
+    }
+})
+
+}
+
 
 function timerBox(){
     ctx.fillStyle = "red";
@@ -175,6 +194,7 @@ function animate() {
     backgroundLine();//got to call so that it will show-- this is a call back function!
     timerBox()
     jumper.render()
+    startGame()
     // obBlock.slide()
     // obBlock.render()
     // obBlock2.slide()
