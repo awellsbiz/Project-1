@@ -3,7 +3,9 @@
 const canvas = document.querySelector("#canvas")
 let startScreen = document.querySelector("#startScreen")
 let startTime = 60
-
+let button = document.querySelector("#button")
+let overlay = document.querySelector("#overlay")
+let startCard = document.querySelector("#startCard")
 
 
 //set up the canvas. the .getContex allows the use of all the tools of canvas. like creating shapes and such
@@ -109,28 +111,25 @@ let countDown = setInterval(() => {
     startTime--
     //ctx.innerText = startTime
 }, 1000)
-let sp
+
 function startGame (){
-    // ctx.beginPath();
-    // ctx.rect(250,150, 50, 100)
-    ctx.fontStyle = "green"
+    ctx.fontStyle = "blue"
     ctx.font = "bold 18px Arial";
-    ctx.fillText("PRESS SPACE TO START", 100, 100)
+    let message = ctx.fillText("PRESS ARROW KEY UP TO START", 100, 100)
     if (startTime === 60) {
         cancelAnimationFrame(animationId)
     } 
-
-let spaceBar = document.addEventListener("keydown", e => {
-    if (e.code === "Space"){
-        animate()
-    }
+    let spaceBar = document.addEventListener("keydown", e => {
+        if (e.code === "ArrowUp"){
+            animate()
+        }
 })
 
 }
 
 
 function timerBox(){
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "green";
     ctx.font = "bold 18px Arial";
     ctx.fillText(`Time Left: ${startTime}`, 400, 40);
     if(startTime === 0){
@@ -155,10 +154,9 @@ function getRandomNumber(min,max){
 
 function generateBlocks() {
     let timeDelay = getRandomNumber(800, 1400);
- obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
+ obBlock5.push(new obstacle(550, 230, 20, 20, "green", 3))
 
     setTimeout(generateBlocks, timeDelay)
-    console.log(obBlock5.push)
 }
 
 
@@ -179,33 +177,13 @@ function detectHit() {
 let animationId = null;
 function animate() {
    animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
-    ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
-    // if(obBlock5.length > 1 ){
-    //      if (detectHit()) {
-    //         //collision logic-end the game here
-    //         cancelAnimationFrame(animationId)
-    //         console.log("end game")
-    //     }
-    //     if (obBlock5 < obBlock5){
-    //         console.log("heyy")
-    //         //obBlock5.shift()
-    //     }
-    //  }
+    ctx.clearRect(0,0, canvas.width, canvas.height)//used to 
     backgroundLine();//got to call so that it will show-- this is a call back function!
     timerBox()
     jumper.render()
     startGame()
-    // obBlock.slide()
-    // obBlock.render()
-    // obBlock2.slide()
-    // obBlock2.render()
-    // obBlock3.slide()
-    // obBlock3.render()
-    // obBlock4.slide()
-    // obBlock4.render()
-    //console.log(obBlock.slide)
 
-    if(obBlock5.length > 0 && obBlock5[0].x < jumper.x + -100)
+    if(obBlock5.length > 0 && obBlock5[0].x < jumper.x - 50)
     obBlock5.shift(); 
 
     obBlock5.forEach(obBlocks => {
@@ -214,12 +192,9 @@ function animate() {
         if (detectHit()) {
             //collision logic-end the game here
             cancelAnimationFrame(animationId)
-            console.log("end game")
         }
      })
     }
-
-    //create the game ending 
 
     document.addEventListener('keydown',  e => {
         if (e.code === "Space"){
@@ -229,12 +204,10 @@ function animate() {
             }
         }
         if(e.key === "ArrowRight"){
-                console.log("arrow right")
                 jumper.x += jumper.speed + 20
                 jumper.moveRight= true
             
         }
-        //console.log(e)
         }
     )
     
@@ -243,41 +216,3 @@ function animate() {
     }, getRandomNumber(1000))
     
     animate()
-
-// let newObstacles =[]
-
-
-//to fill in the player make a player varialble and set a "new" player to pass arguments in that will be passed through the arguments above from player class and render function
-
-//need to call the render function before the player/'jumper' has drawn to the canvas- makes the jump visibly seen by the user
-
-// console.log(jumper)
-
-//moved function down here and added jumper/'player' render funtion inside that scope. I was calling the animate but the render was happening  out of scope. and not showing square. 
-
-
-
-
-// jump() {
-// if(this.shouldJump){
-//     this.jumpCounter++;
-//     if(this.jumpCounter < 15)
-//     this.y -= this.jumpHeight;
-// }else if(this.jumpCounter > 14 && this.jumpCounter < 19){
-//     this.y += 0;
-// }else if(this.jumpCounter < 33){
-//     this.y =+ this.jumpHeight;
-// }
-// if(this.jumpCounter >= 32){
-//     this.shouldJump = false;
-// }
-// };
-//everything in the class is is in the animation scope. callbacks are running through that function.
-// render() {
-//     this.jump()
-//     ctx.fillStyle = this.color
-//     ctx.fillRect(this.x, this.y, this.height, this.width)
-// }
-
-// accsessing event listener from the window- will trigger call back
-

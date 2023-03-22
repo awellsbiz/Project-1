@@ -34,15 +34,15 @@ h1 {
 
 #container {
     display: flex;
-   background-color: pink;
+   background-color: black;
    height: 700px;
    flex-wrap: wrap;
    flex-direction: column;
 
 }
 canvas {
-    background-color: yellow;
-    border: 5px solid grey;
+    background-color: rgb(83, 89, 90);
+    border: 10px solid grey;
     height: 299px;
     width: 573px;
     display: flex;
@@ -55,4 +55,6 @@ background-color: blue;
 height: 88px;
 width: 573px;
 border: 5px red solid;
+text-align: center;
+font-size: 18px;
 }
