@@ -75,8 +75,6 @@ jump() {
     }
 
 }
-
-moveRight
 }
 
 
@@ -132,29 +130,43 @@ function backgroundLine() {
 }
 //building out a random number function to use when needed to help generate new obstacles.
 
-function getRandomNumber(min,max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+// function getRandomNumber(min,max){
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+//}
+
+// presentTime = 1000; 
+
+// function generateBlocks() {
+//     let timeDelay = getRandomNumber(800, 1400);
+//  obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
+
+//     setTimeout(generateBlocks, timeDelay)
+//     console.log(obBlock5.push)
+// }
+
+function detectHit() {
+    const left = obBlock.x <= jumper.width + jumper.x
+    const right = obBlock.x + obBlock.width >= jumper.x
+    const top = obBlock.y <= jumper.y + jumper.height
+    const bottom = obBlock.y + obBlock.height >= jumper.y
+    if (left && top && bottom && right) {
+        return true
+    } else {
+        return false 
+    }
 }
-
-presentTime = 1000; 
-
-function generateBlocks() {
-    let timeDelay = getRandomNumber(800, 1400);
- obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
-
-    setTimeout(generateBlocks, timeDelay)
-    console.log(obBlock5.push)
-}
-
-
 
 let animationId = null;
 function animate() {
    animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
+    if (detectHit()) {
+        //collision logic-end the game here
+        cancelAnimationFrame(animationId)
+        console.log("end game")
+    }
     backgroundLine();//got to call so that it will show-- this is a call back function!
     timerBox()
-    console.log(timerBox)
     jumper.render()
     obBlock.slide()
     obBlock.render()
@@ -173,7 +185,6 @@ function animate() {
     //         console.log("colliding")
     //     }  
     //  })
-    // if (obBlock.x + obBlock.width <= jumper.width + jumper.x ) {
     //     cancelAnimationFrame(animationId)
     // }
 }
@@ -188,12 +199,10 @@ function animate() {
             }
         }
         if(e.key === "ArrowRight"){
-            //if(!jumper.moveRight){
                 console.log("arrow right")
                 jumper.x += jumper.speed + 20
                 jumper.moveRight= true
-                //jumper.moveRight === !
-            //}
+            
         }
         //console.log(e)
         }
