@@ -104,8 +104,7 @@ let obBlock = new obstacle (170, 230, 20, 20, "green", 1)
 // let obBlock2 = new obstacle (450, 230, 20, 20, "green", 2)
 // let obBlock3 = new obstacle (550, 230, 20, 20, "green", 2)
 // let obBlock4 = new obstacle (650, 230, 20, 20, "green", 2)
-//let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
-
+let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
 let countDown = setInterval(() => {
     startTime--
     //ctx.innerText = startTime
@@ -117,6 +116,7 @@ function timerBox(){
     ctx.fillText(`Time Left: ${startTime}`, 400, 40);
     if(startTime === 0){
         clearInterval(countDown)
+        cancelAnimationFrame(animationId)
     }
 }
 
@@ -130,25 +130,26 @@ function backgroundLine() {
 }
 //building out a random number function to use when needed to help generate new obstacles.
 
-// function getRandomNumber(min,max){
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-//}
+function getRandomNumber(min,max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-// presentTime = 1000; 
+function generateBlocks() {
+    let timeDelay = getRandomNumber(800, 1400);
+ obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
 
-// function generateBlocks() {
-//     let timeDelay = getRandomNumber(800, 1400);
-//  obBlock5.push(new obstacle(550, 230, 20, 20, "green", 2))
+    setTimeout(generateBlocks, timeDelay)
+    console.log(obBlock5.push)
+}
 
-//     setTimeout(generateBlocks, timeDelay)
-//     console.log(obBlock5.push)
-// }
 
+//obBlock5.pop(obBlock5[0])
 function detectHit() {
-    const left = obBlock.x <= jumper.width + jumper.x
-    const right = obBlock.x + obBlock.width >= jumper.x
-    const top = obBlock.y <= jumper.y + jumper.height
-    const bottom = obBlock.y + obBlock.height >= jumper.y
+    let i= obBlock5.length
+    const left = obBlock5[0].x <= jumper.width + jumper.x
+    const right = obBlock5[0].x + obBlock5[0].width >= jumper.x
+    const top = obBlock5[0].y <= jumper.y + jumper.height
+    const bottom = obBlock5[0].y + obBlock5[0].height >= jumper.y
     if (left && top && bottom && right) {
         return true
     } else {
@@ -160,16 +161,22 @@ let animationId = null;
 function animate() {
    animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to clear out the contents of previous frame
-    if (detectHit()) {
-        //collision logic-end the game here
-        cancelAnimationFrame(animationId)
-        console.log("end game")
-    }
+    // if(obBlock5.length > 1 ){
+    //      if (detectHit()) {
+    //         //collision logic-end the game here
+    //         cancelAnimationFrame(animationId)
+    //         console.log("end game")
+    //     }
+    //     if (obBlock5 < obBlock5){
+    //         console.log("heyy")
+    //         //obBlock5.shift()
+    //     }
+    //  }
     backgroundLine();//got to call so that it will show-- this is a call back function!
     timerBox()
     jumper.render()
-    obBlock.slide()
-    obBlock.render()
+    // obBlock.slide()
+    // obBlock.render()
     // obBlock2.slide()
     // obBlock2.render()
     // obBlock3.slide()
@@ -178,16 +185,19 @@ function animate() {
     // obBlock4.render()
     //console.log(obBlock.slide)
 
-    // obBlock5.forEach(obBlocks => {
-    //     obBlocks.slide()
-    //     obBlocks.render();
-    //     if (jumper.x + jumper.width > obBlocks.x) {
-    //         console.log("colliding")
-    //     }  
-    //  })
-    //     cancelAnimationFrame(animationId)
-    // }
-}
+    if(obBlock5.length > 0 && obBlock5[0].x < jumper.x + -100)
+    obBlock5.shift(); 
+
+    obBlock5.forEach(obBlocks => {
+        obBlocks.slide()
+        obBlocks.render()
+        if (detectHit()) {
+            //collision logic-end the game here
+            cancelAnimationFrame(animationId)
+            console.log("end game")
+        }
+     })
+    }
 
     //create the game ending 
 
@@ -208,10 +218,11 @@ function animate() {
         }
     )
     
+    setTimeout(() => {
+        generateBlocks();
+    }, getRandomNumber(1000))
+    
     animate()
-// setTimeout(() => {
-//     generateBlocks();
-// }, getRandomNumber(presentTime))
 
 // let newObstacles =[]
 
