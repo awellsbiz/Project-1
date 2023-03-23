@@ -8,6 +8,7 @@ let overlay = document.querySelector("#overlay")
 let startCard = document.querySelector("#startCard")
 let overlay2 = document.querySelector("#overlay2")
 let restartBtn = document.querySelector("#restartBtn")
+let endCard = document.querySelector("#endCard")
 
 
 //set up the canvas. the .getContex allows the use of all the tools of canvas. like creating shapes and such
@@ -93,39 +94,15 @@ function startGame (){
     if (startTime === 15) {
         cancelAnimationFrame(animationId)
     } 
+    restart2
+}
 
-button.onclick = function () {
+let restart2 = button.onclick = function () {
     animate()
     console.log(overlay.style.visibility)
     
         overlay.style.visibility = "hidden";
 }
-
-}
-
-// restartBtn.onclick = function () {
-//     backgroundLine()
-
-// }
-
-// function youWon () {
-//     if (startTime === 0) {
-//         overlay2.style.visibility = "visible"
-//         console.log(overlay2.style.visibility)
-// }
-// }
-
-// function endGame () {
-//     if (detectHit === true) {
-//         overlay2.style.visibility === "visible"
-//     }
-// }
-
-// function endGame(){
-//     if (detectHit === true) {
-
-//     }
-//}
 
 
 function timerBox(){
@@ -161,6 +138,11 @@ function generateBlocks() {
 
     setTimeout(generateBlocks, timeDelay)
 }
+// let playAgainBtn = function addElement(){
+
+//     <button onclick="location.reload()"> Play again</button>
+// }
+
 
 
 //obBlock5.pop(obBlock5[0])
@@ -174,12 +156,13 @@ function detectHit() {
         overlay2.style.visibility = "visible"
         overlay2.style.color= "red"
         overlay2.style.textAlign= "center"
-        overlay2.innerText= "You Lost! \n Refresh page to try again"
+        overlay2.innerHTML= `You Lost! \n Refresh page to try again \n`
         return true
     } else {
         return false 
     }
 }
+
 
 let animationId = null;
 function animate() {
@@ -199,11 +182,13 @@ function animate() {
         if (detectHit()) {
             //collision logic-end the game here
             cancelAnimationFrame(animationId)
+            obBlock5.shift()  
         }
      })
     }
 
     document.addEventListener('keydown',  e => {
+        console.log(e)
         if (e.code === "Space"){
             if(!jumper.shouldJump){ 
                 jumper.jumpCounter = 0;
@@ -216,7 +201,7 @@ function animate() {
             
         }
         if (e.key === "ArrowLeft"){
-            jumper.x -= jumper.speed - 10
+            jumper.x -= jumper.speed
             jumper.moveRight = true
         }
         }
@@ -227,3 +212,24 @@ function animate() {
     }, getRandomNumber(1000))
     
     animate()
+    function restartGame () {
+        cancelAnimationFrame(animationId)
+        startTime = 15
+        restart2
+        overlay2.style.visibility="hidden"
+        overlay.style.visibility="visible"
+        startGame()
+        timerBox()
+        jumper.render()
+        backgroundLine()
+        setTimeout(() => {
+            generateBlocks();
+        }, getRandomNumber(1000))
+        animationId = null
+        animate()
+    }
+
+    // function refreshPage() {
+    //     window.location.reload()
+    // }
+    
