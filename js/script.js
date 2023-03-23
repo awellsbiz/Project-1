@@ -138,11 +138,6 @@ function generateBlocks() {
 
     setTimeout(generateBlocks, timeDelay)
 }
-// let playAgainBtn = function addElement(){
-
-//     <button onclick="location.reload()"> Play again</button>
-// }
-
 
 
 //obBlock5.pop(obBlock5[0])
@@ -218,18 +213,18 @@ function animate() {
         restart2
         overlay2.style.visibility="hidden"
         overlay.style.visibility="visible"
+        animationId
         startGame()
         timerBox()
+        obBlock5
+        obBlock5 = []
+        jumper
         jumper.render()
         backgroundLine()
+        animate()
         setTimeout(() => {
             generateBlocks();
         }, getRandomNumber(1000))
-        animationId = null
-        animate()
+        // animationId = null
     }
-
-    // function refreshPage() {
-    //     window.location.reload()
-    // }
     
