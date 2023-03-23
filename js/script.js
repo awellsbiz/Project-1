@@ -7,6 +7,7 @@ let button = document.querySelector("#button")
 let overlay = document.querySelector("#overlay")
 let startCard = document.querySelector("#startCard")
 let overlay2 = document.querySelector("#overlay2")
+let restartBtn = document.querySelector("#restartBtn")
 
 
 //set up the canvas. the .getContex allows the use of all the tools of canvas. like creating shapes and such
@@ -31,6 +32,7 @@ class player {
         this.shouldJump = false;//boolean to compare wether the player should jump or not- will revers later in the code
         this.jumpCounter = 0;//will go up on each frame- allowing to stop animation
         this.moveRight = false
+        this.moveLeft = false
         
     }
     
@@ -101,13 +103,17 @@ button.onclick = function () {
 
 }
 
+// restartBtn.onclick = function () {
+//     backgroundLine()
+
+// }
+
 // function youWon () {
 //     if (startTime === 0) {
 //         overlay2.style.visibility = "visible"
 //         console.log(overlay2.style.visibility)
 // }
 // }
-youWon()
 
 // function endGame () {
 //     if (detectHit === true) {
@@ -129,7 +135,10 @@ function timerBox(){
     if(startTime === 0){
         clearInterval(countDown)
         cancelAnimationFrame(animationId)
-    }
+        overlay2.style.visibility = "visible"
+        overlay2.style.textAlign = "center"
+        overlay2.style.color = "green"
+}
 }
 
 function backgroundLine() {
@@ -147,7 +156,7 @@ function getRandomNumber(min,max){
 }
 
 function generateBlocks() {
-    let timeDelay = getRandomNumber(200, 20000);
+    let timeDelay = getRandomNumber(200, 10000);
  obBlock5.push(new obstacle(550, 230, 20, 20, "green", 1))
 
     setTimeout(generateBlocks, timeDelay)
@@ -162,6 +171,10 @@ function detectHit() {
     const top = obBlock5[0].y <= jumper.y + jumper.height
     const bottom = obBlock5[0].y + obBlock5[0].height >= jumper.y
     if (left && top && bottom && right) {
+        overlay2.style.visibility = "visible"
+        overlay2.style.color= "red"
+        overlay2.style.textAlign= "center"
+        overlay2.innerText= "You Lost! \n Refresh page to try again"
         return true
     } else {
         return false 
@@ -198,9 +211,13 @@ function animate() {
             }
         }
         if(e.key === "ArrowRight"){
-                jumper.x += jumper.speed + 20
+                jumper.x += jumper.speed + 10
                 jumper.moveRight= true
             
+        }
+        if (e.key === "ArrowLeft"){
+            jumper.x -= jumper.speed - 10
+            jumper.moveRight = true
         }
         }
     )
