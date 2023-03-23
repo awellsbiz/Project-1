@@ -151,7 +151,7 @@ function detectHit() {
         overlay2.style.visibility = "visible"
         overlay2.style.color= "red"
         overlay2.style.textAlign= "center"
-        overlay2.innerHTML= `You Lost! \n Refresh page to try again \n`
+        overlay2.innerHTML= `You Lost! \n`
         return true
     } else {
         return false 
