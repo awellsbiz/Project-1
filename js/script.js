@@ -2,10 +2,11 @@
 
 const canvas = document.querySelector("#canvas")
 let startScreen = document.querySelector("#startScreen")
-let startTime = 60
+let startTime = 15
 let button = document.querySelector("#button")
 let overlay = document.querySelector("#overlay")
 let startCard = document.querySelector("#startCard")
+let overlay2 = document.querySelector("#overlay2")
 
 
 //set up the canvas. the .getContex allows the use of all the tools of canvas. like creating shapes and such
@@ -16,26 +17,6 @@ const ctx = canvas.getContext("2d")
 
 canvas.setAttribute('height', getComputedStyle(canvas).height)
 canvas.setAttribute('width', getComputedStyle(canvas).width)
-
-// console.log(ctx)
-
-//create player- making a rectangle
-
-// ctx.fillStyle = "green"
-// ctx.fillRect(30, 30, 50, 50)
-
-//using a funtion to draw the line. the code will be separate from other code. 
-
-
-// need to animante the line to be repeatedly drawn. make a function out of it. Maybe loop it through. it creates an illusion- the drawings are being crated quickly
-
-
-
-
-// create player- see canvas crawler code
-// has its own class allowing the use of methods and fields with only the class and not the app
-//pasing arguments in the constructor allows for customization. 
-
 
 class player {
     constructor(x, y, height, width, color, speed){
@@ -78,9 +59,6 @@ jump() {
 
 }
 }
-
-
-
 let jumper = new player(20, 224, 25, 25, 'red', 10);
 
 
@@ -103,9 +81,6 @@ class obstacle {
 }
 let obBlock = new obstacle (170, 230, 20, 20, "green", 1)
 
-// let obBlock2 = new obstacle (450, 230, 20, 20, "green", 2)
-// let obBlock3 = new obstacle (550, 230, 20, 20, "green", 2)
-// let obBlock4 = new obstacle (650, 230, 20, 20, "green", 2)
 let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
 let countDown = setInterval(() => {
     startTime--
@@ -113,27 +88,38 @@ let countDown = setInterval(() => {
 }, 1000)
 
 function startGame (){
-    // ctx.fontStyle = "blue"
-    // ctx.font = "bold 18px Arial";
-    // let message = ctx.fillText("PRESS ARROW KEY UP TO START", 100, 100)
-    if (startTime === 60) {
+    if (startTime === 15) {
         cancelAnimationFrame(animationId)
     } 
-    // button = document.addEventListener("click", e => {
-    //             animate() 
-             
-//})
 
 button.onclick = function () {
     animate()
-    if (overlay.style.display !== "none") {
-        overlay.style.display = "none";
-    } else {
-        overlay.style.display = "block";
-    }
+    console.log(overlay.style.visibility)
+    
+        overlay.style.visibility = "hidden";
 }
 
 }
+
+// function youWon () {
+//     if (startTime === 0) {
+//         overlay2.style.visibility = "visible"
+//         console.log(overlay2.style.visibility)
+// }
+// }
+youWon()
+
+// function endGame () {
+//     if (detectHit === true) {
+//         overlay2.style.visibility === "visible"
+//     }
+// }
+
+// function endGame(){
+//     if (detectHit === true) {
+
+//     }
+//}
 
 
 function timerBox(){
@@ -157,12 +143,12 @@ function backgroundLine() {
 //building out a random number function to use when needed to help generate new obstacles.
 
 function getRandomNumber(min,max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1 )) + min;
 }
 
 function generateBlocks() {
-    let timeDelay = getRandomNumber(800, 1400);
- obBlock5.push(new obstacle(550, 230, 20, 20, "green", 3))
+    let timeDelay = getRandomNumber(200, 20000);
+ obBlock5.push(new obstacle(550, 230, 20, 20, "green", 1))
 
     setTimeout(generateBlocks, timeDelay)
 }
