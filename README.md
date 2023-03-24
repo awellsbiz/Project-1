@@ -35,8 +35,16 @@ Canvas, DOM
 - Add music
 - Add goals so the player can collide and earn points with score board
 
-## ROAD BLOCKS
+## SOURCES
 
-- animating the screen to move
+- https://codepen.io/maelfyn/pen/YPzPyd
+
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements
+
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor
+
+- https://github.com/WDI-SEA/canvas-crawler
+
+- https://stackoverflow.com/questions/10735922/how-to-stop-a-requestanimationframe-recursion-loop
 
 
