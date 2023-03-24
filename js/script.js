@@ -1,8 +1,8 @@
-//grab all the elements that you will be using for the game and set some variables for them.
+//DOM ELEMENTS
 
 const canvas = document.querySelector("#canvas")
 let startScreen = document.querySelector("#startScreen")
-let startTime = 15
+
 let button = document.querySelector("#button")
 let overlay = document.querySelector("#overlay")
 let startCard = document.querySelector("#startCard")
@@ -10,16 +10,12 @@ let overlay2 = document.querySelector("#overlay2")
 let restartBtn = document.querySelector("#restartBtn")
 let endCard = document.querySelector("#endCard")
 
-
-//set up the canvas. the .getContex allows the use of all the tools of canvas. like creating shapes and such
-
-const ctx = canvas.getContext("2d")
-
-//got to then resize the canvas- ask the DOM the size of the canvas and set the resolution to be that size. 
-
+//Canvas set up and resizing 
+const ctx = canvas.getContext("2d") 
 canvas.setAttribute('height', getComputedStyle(canvas).height)
 canvas.setAttribute('width', getComputedStyle(canvas).width)
 
+// Creating Player
 class player {
     constructor(x, y, height, width, color, speed){
         this.x = x;
@@ -37,34 +33,32 @@ class player {
         
     }
     
-//32 frmaes is good for jumping- makes the animation smooth- 14 frames for up 4 frames stationed in the air and 14 for coming down
-
-render() {// function to draw and fill out on canvas...its "renders" it. may use draw() too
-    this.jump()
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
-}
-jump() {
-    if(this.shouldJump){
-        this.jumpCounter++;
-        if(this.jumpCounter < 15) {
-        this.y -= this.jumpHeight;
-    }else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
-        this.y += 0;
-    }else if(this.jumpCounter < 33){
-        this.y += this.jumpHeight;
+    render() {
+        this.jump()
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-    if(this.jumpCounter >= 32){
-        this.shouldJump = false;
+    jump() {
+        if(this.shouldJump){
+            this.jumpCounter++;
+            if(this.jumpCounter < 15) {
+                this.y -= this.jumpHeight;
+            }else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
+                this.y += 0;
+            }else if(this.jumpCounter < 33){
+                this.y += this.jumpHeight;
+            }
+            if(this.jumpCounter >= 32){
+                this.shouldJump = false;
+            }
+            console.log(this.shouldJump, this.jumpCounter, this.jumpHeight)
+        }
+        
     }
-    console.log(this.shouldJump, this.jumpCounter, this.jumpHeight)
-    }
-
-}
 }
 let jumper = new player(20, 224, 25, 25, 'red', 10);
 
-
+//COMPUTER PLAYER 
 class obstacle {
     constructor(x, y, width, height, color, speed){
         this.x = x
@@ -82,21 +76,32 @@ class obstacle {
         this.x -= this.slideSpeed
     }
 }
-let obBlock = new obstacle (170, 230, 20, 20, "green", 1)
+//let obBlock = new obstacle (170, 230, 20, 20, "green", 1)
 
-let obBlock5 = []//creating an array so that we can make a fuction / use random methods to make code dryer
-let countDown = setInterval(() => {
-    startTime--
-    //ctx.innerText = startTime
-}, 1000)
+let obBlock5 = []
 
-function startGame (){
-    if (startTime === 15) {
-        cancelAnimationFrame(animationId)
-    } 
-    restart2
-}
+// CONTROLLER
+document.addEventListener('keydown',  e => {
+    console.log(e)
+    if (e.code === "Space"){
+        if(!jumper.shouldJump){ 
+            jumper.jumpCounter = 0;
+            jumper.shouldJump = true;
+        }
+    }
+    if(e.key === "ArrowRight"){
+            jumper.x += jumper.speed + 10
+            jumper.moveRight= true
+        
+    }
+    if (e.key === "ArrowLeft"){
+        jumper.x -= jumper.speed
+        jumper.moveRight = true
+    }
+    }
+)
 
+// BUTTIONS
 let restart2 = button.onclick = function () {
     animate()
     console.log(overlay.style.visibility)
@@ -104,19 +109,20 @@ let restart2 = button.onclick = function () {
         overlay.style.visibility = "hidden";
 }
 
-
+//TIMER FUNCTION AND VARIABLES
+let startTime = 15
+let countDown = setInterval(() => {
+    startTime--
+}, 1000)
 function timerBox(){
     ctx.fillStyle = "green";
     ctx.font = "bold 18px Arial";
     ctx.fillText(`Time Left: ${startTime}`, 400, 40);
-    if(startTime === 0){
-        clearInterval(countDown)
-        cancelAnimationFrame(animationId)
-        overlay2.style.visibility = "visible"
-        overlay2.style.textAlign = "center"
-        overlay2.style.color = "green"
+    win()
 }
-}
+
+
+// FUNCTIONS
 
 function backgroundLine() {
     ctx.beginPath();
@@ -126,8 +132,6 @@ function backgroundLine() {
     ctx.strokeStyle = "black";
     ctx.stroke();
 }
-//building out a random number function to use when needed to help generate new obstacles.
-
 function getRandomNumber(min,max){
     return Math.floor(Math.random() * (max - min + 1 )) + min;
 }
@@ -138,9 +142,19 @@ function generateBlocks() {
 
     setTimeout(generateBlocks, timeDelay)
 }
+// setTimeout(() => {
+//     generateBlocks();
+// }, getRandomNumber(1000))
 
+let win = function win(){  if(startTime === 0){
+    clearInterval(countDown)
+    cancelAnimationFrame(animationId)
+    overlay2.style.visibility = "visible"
+    overlay2.style.textAlign = "center"
+    overlay2.style.color = "green"
+}
+}
 
-//obBlock5.pop(obBlock5[0])
 function detectHit() {
     let i= obBlock5.length
     const left = obBlock5[0].x <= jumper.width + jumper.x
@@ -158,8 +172,14 @@ function detectHit() {
     }
 }
 
+function startGame (){
+    if (startTime === 15) {
+        cancelAnimationFrame(animationId)
+    } 
+    //restart2
+}
 
-let animationId = null;
+
 function animate() {
    animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to 
@@ -180,51 +200,53 @@ function animate() {
             obBlock5.shift()  
         }
      })
-    }
 
-    document.addEventListener('keydown',  e => {
-        console.log(e)
-        if (e.code === "Space"){
-            if(!jumper.shouldJump){ 
-                jumper.jumpCounter = 0;
-                jumper.shouldJump = true;
-            }
-        }
-        if(e.key === "ArrowRight"){
-                jumper.x += jumper.speed + 10
-                jumper.moveRight= true
-            
-        }
-        if (e.key === "ArrowLeft"){
-            jumper.x -= jumper.speed
-            jumper.moveRight = true
-        }
-        }
-    )
-    
-    setTimeout(() => {
-        generateBlocks();
-    }, getRandomNumber(1000))
-    
+    }
     animate()
+
+    setTimeout(() => {
+       generateBlocks();
+   }, getRandomNumber(1000))
+   
+    
+   // animate()
     function restartGame () {
-        cancelAnimationFrame(animationId)
+        //cancelAnimationFrame(animationId)
         startTime = 15
-        restart2
+        //restart2
         overlay2.style.visibility="hidden"
         overlay.style.visibility="visible"
-        animationId
-        startGame()
-        timerBox()
+        //animationId
         obBlock5
         obBlock5 = []
-        jumper
-        jumper.render()
-        backgroundLine()
-        animate()
-        setTimeout(() => {
-            generateBlocks();
-        }, getRandomNumber(1000))
-        // animationId = null
-    }
+        //animationId = requestAnimationFrame(animate)
+        //ctx.clearRect(0,0, canvas.width, canvas.height)
+        //     getRandomNumber()
+        //     generateBlocks()
+        jumper = new player(20, 224, 25, 25, 'red', 10)
+        //     startGame()
+        //     timerBox()
+        //     backgroundLine()
+        //     if(obBlock5.length > 0 && obBlock5[0].x < jumper.x - 50)
+        // obBlock5.shift(); 
+        
+        // obBlock5.forEach(obBlocks => {
+        //     obBlocks.slide()
+        //     obBlocks.render()
+        // })
+        // if (detectHit()) {
+            //collision logic-end the game here
+            //cancelAnimationFrame(animationId)
+            //         obBlock5.shift()  
+            //     }
+            //     animate()
+            //  })
+            //     // animationId = null
+            animate()
+
+            setTimeout(() => {
+                generateBlocks();
+            }, getRandomNumber(1000))
+        }
+
     

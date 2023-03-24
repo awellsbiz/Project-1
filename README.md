@@ -1,8 +1,10 @@
-# ** GOAL GETTER **
+# ** Obstacle Jumper **
 
 ## DESCRPTION
 
-The Player is on a mission to avoid as many obstacles with in 60 seconds. If the player hits an obstacle the game is over. If they do not hit any obstacles in 60 seconds they won.
+The Player is on a mission to avoid as many obstacles with in 15 seconds. If the player hits an obstacle the game is over. If they do not hit any obstacles in 60 seconds they won.
+
+https://awellsbiz.github.io/Project-1/
 
 ## TECH STACK
 
@@ -18,7 +20,7 @@ Canvas, DOM
 
 - Build and endless runner game with a countdown of 60 seconds. 
 - Game board must be at center of the screen
-- game board must have loading/ start screen and End screen
+- game board must have start screen and End screen
 - Must have a timmer in the right hand corner 
 - player icon must be styled as a block
 - obsticle are styled blocks of different color than player
