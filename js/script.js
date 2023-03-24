@@ -179,8 +179,7 @@ function startGame (){
     //restart2
 }
 
-
-function animate() {
+ function animate() {
    animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to 
     backgroundLine();//got to call so that it will show-- this is a call back function!
@@ -217,32 +216,15 @@ function animate() {
         overlay2.style.visibility="hidden"
         overlay.style.visibility="visible"
         //animationId
-        obBlock5
+        // obBlock5
         obBlock5 = []
-        //animationId = requestAnimationFrame(animate)
-        //ctx.clearRect(0,0, canvas.width, canvas.height)
-        //     getRandomNumber()
-        //     generateBlocks()
+        // animationId = requestAnimationFrame(animate)
+        // //ctx.clearRect(0,0, canvas.width, canvas.height)
+        // //     getRandomNumber()
+        // //     generateBlocks()
         jumper = new player(20, 224, 25, 25, 'red', 10)
-        //     startGame()
-        //     timerBox()
-        //     backgroundLine()
-        //     if(obBlock5.length > 0 && obBlock5[0].x < jumper.x - 50)
-        // obBlock5.shift(); 
-        
-        // obBlock5.forEach(obBlocks => {
-        //     obBlocks.slide()
-        //     obBlocks.render()
-        // })
-        // if (detectHit()) {
-            //collision logic-end the game here
-            //cancelAnimationFrame(animationId)
-            //         obBlock5.shift()  
-            //     }
-            //     animate()
-            //  })
-            //     // animationId = null
-            animate()
+      
+            //animate()
 
             setTimeout(() => {
                 generateBlocks();
