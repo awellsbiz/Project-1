@@ -188,10 +188,9 @@ function detectHit() {
           //   animationId
           //   ctx.clearRect(0,0, canvas.width, canvas.height)
           //       getRandomNumber()
-          //       generateBlocks()
           //timerBox()
-          obBlock5
           obBlock5 = []
+             generateBlocks()
           //startTime = 15
         //   // animationId = requestAnimationFrame(animate)
         jumper = new player(20, 224, 25, 25, 'red', 10)
