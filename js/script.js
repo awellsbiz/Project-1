@@ -162,32 +162,42 @@ function detectHit() {
     const top = obBlock5[0].y <= jumper.y + jumper.height
     const bottom = obBlock5[0].y + obBlock5[0].height >= jumper.y
     if (left && top && bottom && right) {
+        let message = document.createElement("div")
+        message.innerText= "You Lost"
+        message.style.top= "21px"
+        message.style.position= "absolute"
+        message.style.color= "red"
         overlay.style.visibility = "visible"
-        overlay.style.color= "red"
-        overlay.style.textAlign= "center"
-        overlay.innerHTML= `You Lost! \n`
+        // overlay.style.color= "red"
+        // overlay.style.textAlign= "center"
+        overlay.innerText= ""
         let resetBtn = document.createElement("button")
         // resetBtn.innerHTML = "Reset"
         console.log(resetBtn)
-        resetBtn.innerText= "reset"
+        resetBtn.innerText= "Reset\n"
+        resetBtn.style.position= "absolute"
+        resetBtn.style.bottom= "10px"
+        resetBtn.margin= "3px"
         resetBtn.addEventListener("click", () =>{
             console.log("yoo")
+            
           //cancelAnimationFrame(animationId)
-         //startTime = 15
           //restart2
-        //   // overlay2.style.visibility="hidden"
-        overlay.style.visibility="hidden"
-        //   animationId
-        //   ctx.clearRect(0,0, canvas.width, canvas.height)
-        //       getRandomNumber()
-        //       generateBlocks()
-        //timerBox()
-        //   obBlock5
-        //   obBlock5 = []
+          //   // overlay2.style.visibility="hidden"
+          overlay.style.visibility="hidden"
+          //   animationId
+          //   ctx.clearRect(0,0, canvas.width, canvas.height)
+          //       getRandomNumber()
+          //       generateBlocks()
+          //timerBox()
+          obBlock5
+          obBlock5 = []
+          //startTime = 15
         //   // animationId = requestAnimationFrame(animate)
         jumper = new player(20, 224, 25, 25, 'red', 10)
         animate()
         })
+        overlay.append(message)
         overlay.append(resetBtn)
 
         
