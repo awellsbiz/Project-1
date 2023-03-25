@@ -149,9 +149,9 @@ function generateBlocks() {
 let win = function win(){  if(startTime === 0){
     clearInterval(countDown)
     cancelAnimationFrame(animationId)
-    overlay2.style.visibility = "visible"
-    overlay2.style.textAlign = "center"
-    overlay2.style.color = "green"
+    // overlay2.style.visibility = "visible"
+    // overlay2.style.textAlign = "center"
+    // overlay2.style.color = "green"
 }
 }
 
@@ -162,17 +162,42 @@ function detectHit() {
     const top = obBlock5[0].y <= jumper.y + jumper.height
     const bottom = obBlock5[0].y + obBlock5[0].height >= jumper.y
     if (left && top && bottom && right) {
-        overlay2.style.visibility = "visible"
-        overlay2.style.color= "red"
-        overlay2.style.textAlign= "center"
-        overlay2.innerHTML= `You Lost! \n`
+        overlay.style.visibility = "visible"
+        overlay.style.color= "red"
+        overlay.style.textAlign= "center"
+        overlay.innerHTML= `You Lost! \n`
+        let resetBtn = document.createElement("button")
+        // resetBtn.innerHTML = "Reset"
+        console.log(resetBtn)
+        resetBtn.innerText= "reset"
+        resetBtn.addEventListener("click", () =>{
+            console.log("yoo")
+          //cancelAnimationFrame(animationId)
+         //startTime = 15
+          //restart2
+        //   // overlay2.style.visibility="hidden"
+        overlay.style.visibility="hidden"
+        //   animationId
+        //   ctx.clearRect(0,0, canvas.width, canvas.height)
+        //       getRandomNumber()
+        //       generateBlocks()
+        //timerBox()
+        //   obBlock5
+        //   obBlock5 = []
+        //   // animationId = requestAnimationFrame(animate)
+        jumper = new player(20, 224, 25, 25, 'red', 10)
+        animate()
+        })
+        overlay.append(resetBtn)
+
+        
         return true
     } else {
         return false 
     }
 }
 
-function startGame (){
+const startGame = function startGame (){
     if (startTime === 15) {
         cancelAnimationFrame(animationId)
     } 
@@ -209,22 +234,24 @@ function startGame (){
    
     
    // animate()
-    function restartGame () {
+   function restartGame () {
         //cancelAnimationFrame(animationId)
         startTime = 15
         //restart2
-        overlay2.style.visibility="hidden"
-        overlay.style.visibility="visible"
-        //animationId
+        // overlay2.style.visibility="hidden"
+        // overlay.style.visibility="visible"
+        animationId
+        ctx.clearRect(0,0, canvas.width, canvas.height)
+            getRandomNumber()
+            generateBlocks()
+            timerBox()
         // obBlock5
         obBlock5 = []
         // animationId = requestAnimationFrame(animate)
-        // //ctx.clearRect(0,0, canvas.width, canvas.height)
-        // //     getRandomNumber()
-        // //     generateBlocks()
         jumper = new player(20, 224, 25, 25, 'red', 10)
       
-            //animate()
+            animate()
+
 
             setTimeout(() => {
                 generateBlocks();
