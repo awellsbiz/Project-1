@@ -1,3 +1,4 @@
+let startTime = 15
 //DOM ELEMENTS
 
 const canvas = document.querySelector("#canvas")
@@ -106,11 +107,11 @@ let restart2 = button.onclick = function () {
     animate()
     console.log(overlay.style.visibility)
     
-        overlay.style.visibility = "hidden";
+    overlay.style.visibility = "hidden";
 }
 
 //TIMER FUNCTION AND VARIABLES
-let startTime = 15
+
 let countDown = setInterval(() => {
     startTime--
 }, 1000)
@@ -146,12 +147,18 @@ function generateBlocks() {
 //     generateBlocks();
 // }, getRandomNumber(1000))
 
+function reset() {
+    if (startTime <= 14) {
+        return false;
+    } 
+}
+
 let win = function win(){  if(startTime === 0){
     clearInterval(countDown)
     cancelAnimationFrame(animationId)
-    // overlay2.style.visibility = "visible"
-    // overlay2.style.textAlign = "center"
-    // overlay2.style.color = "green"
+    overlay2.style.visibility = "visible"
+    overlay2.style.textAlign = "center"
+    overlay2.style.color = "green"
 }
 }
 
@@ -179,27 +186,19 @@ function detectHit() {
         resetBtn.style.bottom= "10px"
         resetBtn.margin= "3px"
         resetBtn.addEventListener("click", () =>{
-            console.log("yoo")
-            
-          //cancelAnimationFrame(animationId)
-          //restart2
-          //   // overlay2.style.visibility="hidden"
-          overlay.style.visibility="hidden"
-          //   animationId
-          //   ctx.clearRect(0,0, canvas.width, canvas.height)
-          //       getRandomNumber()
-          //timerBox()
-          obBlock5 = []
-             generateBlocks()
-          //startTime = 15
-        //   // animationId = requestAnimationFrame(animate)
-        jumper = new player(20, 224, 25, 25, 'red', 10)
-        animate()
+            console.log("resetBtn clicked")
+            startTime = 15;
+            //restart2
+            //   // overlay2.style.visibility="hidden"
+            overlay.style.visibility="hidden"
+            obBlock5 = []
+            jumper = new player(20, 224, 25, 25, 'red', 10)
+           
+            generateBlocks();
+            animate()
         })
         overlay.append(message)
         overlay.append(resetBtn)
-
-        
         return true
     } else {
         return false 
@@ -208,12 +207,13 @@ function detectHit() {
 
 const startGame = function startGame (){
     if (startTime === 15) {
-        cancelAnimationFrame(animationId)
+        // cancelAnimationFrame(animationId)
     } 
     //restart2
 }
 
  function animate() {
+    console.log("animate ===", animate)
    animationId = requestAnimationFrame(animate)//methos in JS to be called when ready to update animation-
     ctx.clearRect(0,0, canvas.width, canvas.height)//used to 
     backgroundLine();//got to call so that it will show-- this is a call back function!
@@ -234,8 +234,8 @@ const startGame = function startGame (){
         }
      })
 
-    }
-    animate()
+}
+    // animate()
 
     setTimeout(() => {
        generateBlocks();
@@ -244,27 +244,28 @@ const startGame = function startGame (){
     
    // animate()
    function restartGame () {
-        //cancelAnimationFrame(animationId)
-        startTime = 15
-        //restart2
-        // overlay2.style.visibility="hidden"
-        // overlay.style.visibility="visible"
-        animationId
-        ctx.clearRect(0,0, canvas.width, canvas.height)
-            getRandomNumber()
-            generateBlocks()
-            timerBox()
-        // obBlock5
-        obBlock5 = []
-        // animationId = requestAnimationFrame(animate)
-        jumper = new player(20, 224, 25, 25, 'red', 10)
+    restartGame()
+        // //cancelAnimationFrame(animationId)
+        // startTime = 15
+        // //restart2
+        // // overlay2.style.visibility="hidden"
+        // // overlay.style.visibility="visible"
+        // // animationId
+        // ctx.clearRect(0,0, canvas.width, canvas.height)
+        // getRandomNumber()
+        // generateBlocks()
+        // timerBox()
+        // // obBlock5
+        // obBlock5 = []
+        // // animationId = requestAnimationFrame(animate)
+        // jumper = new player(20, 224, 25, 25, 'red', 10)
       
-            animate()
+        //     animate()
 
 
-            setTimeout(() => {
-                generateBlocks();
-            }, getRandomNumber(1000))
-        }
+        //     setTimeout(() => {
+        //         generateBlocks();
+        //     }, getRandomNumber(1000))
+    }
 
     
