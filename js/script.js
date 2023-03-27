@@ -1,4 +1,3 @@
-let startTime = 15
 //DOM ELEMENTS
 
 const canvas = document.querySelector("#canvas")
@@ -10,6 +9,7 @@ let startCard = document.querySelector("#startCard")
 let overlay2 = document.querySelector("#overlay2")
 let restartBtn = document.querySelector("#restartBtn")
 let endCard = document.querySelector("#endCard")
+
 
 //Canvas set up and resizing 
 const ctx = canvas.getContext("2d") 
@@ -77,7 +77,6 @@ class obstacle {
         this.x -= this.slideSpeed
     }
 }
-//let obBlock = new obstacle (170, 230, 20, 20, "green", 1)
 
 let obBlock5 = []
 
@@ -102,7 +101,7 @@ document.addEventListener('keydown',  e => {
     }
 )
 
-// BUTTIONS
+// BUTTONS
 let restart2 = button.onclick = function () {
     animate()
     console.log(overlay.style.visibility)
@@ -111,7 +110,7 @@ let restart2 = button.onclick = function () {
 }
 
 //TIMER FUNCTION AND VARIABLES
-
+let startTime = 15
 let countDown = setInterval(() => {
     startTime--
 }, 1000)
@@ -143,22 +142,37 @@ function generateBlocks() {
 
     setTimeout(generateBlocks, timeDelay)
 }
-// setTimeout(() => {
-//     generateBlocks();
-// }, getRandomNumber(1000))
 
-function reset() {
-    if (startTime <= 14) {
-        return false;
-    } 
-}
-
-let win = function win(){  if(startTime === 0){
+function win(){  if(startTime === 0){
     clearInterval(countDown)
     cancelAnimationFrame(animationId)
+    let winMessage = document.createElement("div")
+    winMessage.innerText= "Won!"
+    winMessage.style.top= "21px"
+    winMessage.style.position= "absolute"
+    winMessage.style.color= "green"
     overlay2.style.visibility = "visible"
-    overlay2.style.textAlign = "center"
-    overlay2.style.color = "green"
+    overlay2.innerText= ""
+    let resetWinBtn = document.createElement("button")
+    resetWinBtn.innerText= "Reset\n"
+    resetWinBtn.style.position= "absolute"
+    resetWinBtn.style.bottom= "10px"
+    resetWinBtn.margin= "3px"
+    resetWinBtn.addEventListener("click", () =>{
+        console.log("resetBtn clicked")
+        startTime = 15;
+        overlay2.style.visibility="hidden"
+        obBlock5 = []
+        jumper = new player(20, 224, 25, 25, 'red', 10)
+        countDown = setInterval(() => {
+            startTime--
+        }, 1000)
+       
+        generateBlocks();
+        animate()
+})
+        overlay2.append(winMessage)
+        overlay2.append(resetWinBtn)
 }
 }
 
@@ -175,12 +189,9 @@ function detectHit() {
         message.style.position= "absolute"
         message.style.color= "red"
         overlay.style.visibility = "visible"
-        // overlay.style.color= "red"
-        // overlay.style.textAlign= "center"
         overlay.innerText= ""
         let resetBtn = document.createElement("button")
-        // resetBtn.innerHTML = "Reset"
-        console.log(resetBtn)
+        
         resetBtn.innerText= "Reset\n"
         resetBtn.style.position= "absolute"
         resetBtn.style.bottom= "10px"
@@ -188,11 +199,10 @@ function detectHit() {
         resetBtn.addEventListener("click", () =>{
             console.log("resetBtn clicked")
             startTime = 15;
-            //restart2
-            //   // overlay2.style.visibility="hidden"
             overlay.style.visibility="hidden"
             obBlock5 = []
             jumper = new player(20, 224, 25, 25, 'red', 10)
+            
            
             generateBlocks();
             animate()
@@ -206,10 +216,7 @@ function detectHit() {
 }
 
 const startGame = function startGame (){
-    if (startTime === 15) {
-        // cancelAnimationFrame(animationId)
-    } 
-    //restart2
+     startTime === 15
 }
 
  function animate() {
@@ -235,37 +242,10 @@ const startGame = function startGame (){
      })
 
 }
-    // animate()
+
 
     setTimeout(() => {
        generateBlocks();
    }, getRandomNumber(1000))
    
-    
-   // animate()
-   function restartGame () {
-    restartGame()
-        // //cancelAnimationFrame(animationId)
-        // startTime = 15
-        // //restart2
-        // // overlay2.style.visibility="hidden"
-        // // overlay.style.visibility="visible"
-        // // animationId
-        // ctx.clearRect(0,0, canvas.width, canvas.height)
-        // getRandomNumber()
-        // generateBlocks()
-        // timerBox()
-        // // obBlock5
-        // obBlock5 = []
-        // // animationId = requestAnimationFrame(animate)
-        // jumper = new player(20, 224, 25, 25, 'red', 10)
-      
-        //     animate()
-
-
-        //     setTimeout(() => {
-        //         generateBlocks();
-        //     }, getRandomNumber(1000))
-    }
-
     
