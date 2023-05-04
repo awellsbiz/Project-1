@@ -1,4 +1,4 @@
-# ** Obstacle Jumper **
+# ** Goal Hopper **
 
 ## DESCRPTION
 
